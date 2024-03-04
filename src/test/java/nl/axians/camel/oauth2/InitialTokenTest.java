@@ -1,0 +1,49 @@
+package nl.axians.camel.oauth2;
+
+import org.apache.camel.Exchange;
+import org.apache.camel.RoutesBuilder;
+import org.apache.camel.builder.RouteBuilder;
+import org.junit.jupiter.api.Test;
+import org.mockserver.matchers.Times;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockserver.model.HttpRequest.request;
+import static org.mockserver.model.HttpResponse.response;
+
+/**
+ * Test that {@link OAuth2Endpoint} retrieves an initial token when no cached token is available.
+ */
+public class InitialTokenTest extends BaseOAuth2Test {
+
+    @Test
+    public void Should_Retrieve_Initial_Token()
+    {
+        // Arrange
+        mockServer.when(request().withMethod("POST").withPath("/token"), Times.exactly(1))
+                .respond(response().withStatusCode(200)
+                        .withBody("{\"access_token\":\"1234567890\",\"token_type\":\"Bearer\",\"expires_in\":3600}"));
+
+        // Act
+        template.sendBody("direct:initialToken", null);
+
+        // Assert
+        final Exchange exchange = getMockEndpoint("mock:result").getExchanges().getFirst();
+        assertThat(exchange).isNotNull();
+        assertThat(exchange.getIn().getHeader("Authorization")).isEqualTo("Bearer 1234567890");
+    }
+
+    @Override
+    protected RoutesBuilder createRouteBuilder() {
+        return new RouteBuilder() {
+
+            @Override
+            public void configure() {
+                from("direct:initialToken")
+                        .to("oauth2://test?clientId=client&clientSecret=secret&accessTokenUrl=http://localhost:1080/token&scope=scope")
+                        .to("mock:result");
+            }
+
+        };
+    }
+
+}
