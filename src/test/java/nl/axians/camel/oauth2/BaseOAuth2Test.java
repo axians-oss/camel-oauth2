@@ -1,5 +1,7 @@
 package nl.axians.camel.oauth2;
 
+import org.apache.camel.RoutesBuilder;
+import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.test.junit5.CamelTestSupport;
 import org.mockserver.integration.ClientAndServer;
 
@@ -21,6 +23,20 @@ public abstract class BaseOAuth2Test extends CamelTestSupport {
     protected void doPostTearDown() throws Exception {
         super.doPostTearDown();
         mockServer.stop();
+    }
+
+    @Override
+    protected RoutesBuilder createRouteBuilder() {
+        return new RouteBuilder() {
+
+            @Override
+            public void configure() {
+                from("direct:start")
+                        .to("oauth2://test?clientId=client&clientSecret=secret&accessTokenUrl=http://localhost:1080/token&scope=scope")
+                        .to("mock:result");
+            }
+
+        };
     }
 
 }
