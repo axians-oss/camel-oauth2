@@ -4,7 +4,10 @@ import org.apache.camel.Exchange;
 import org.apache.camel.RoutesBuilder;
 import org.apache.camel.builder.RouteBuilder;
 import org.junit.jupiter.api.Test;
-import org.mockserver.matchers.Times;
+import org.mockserver.model.HttpRequest;
+import org.mockserver.verify.VerificationTimes;
+
+import java.nio.charset.StandardCharsets;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockserver.model.HttpRequest.request;
@@ -19,7 +22,8 @@ public class InitialTokenTest extends BaseOAuth2Test {
     public void Should_Retrieve_Initial_Token()
     {
         // Arrange
-        mockServer.when(request().withMethod("POST").withPath("/token"), Times.exactly(1))
+        HttpRequest request = request().withMethod("POST").withPath("/token");
+        mockServer.when(request)
                 .respond(response().withStatusCode(200)
                         .withBody("{\"access_token\":\"1234567890\",\"token_type\":\"Bearer\",\"expires_in\":3600}"));
 
@@ -27,6 +31,11 @@ public class InitialTokenTest extends BaseOAuth2Test {
         template.sendBody("direct:initialToken", null);
 
         // Assert
+        mockServer.verify(request, VerificationTimes.exactly(1));
+        mockServer.verify(request().withHeader("Authorization", "Basic " + "Y2xpZW50OnNlY3JldA=="));
+        mockServer.verify(request().withBody("scope=scope&grant_type=client_credentials", StandardCharsets.UTF_8));
+        mockServer.verify(request().withHeader("Content-Type", "application/x-www-form-urlencoded"));
+
         final Exchange exchange = getMockEndpoint("mock:result").getExchanges().getFirst();
         assertThat(exchange).isNotNull();
         assertThat(exchange.getIn().getHeader("Authorization")).isEqualTo("Bearer 1234567890");
