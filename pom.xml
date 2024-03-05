@@ -12,7 +12,7 @@
     <groupId>nl.axians.camel</groupId>
     <artifactId>camel-oauth2</artifactId>
     <packaging>jar</packaging>
-    <version>1.0.2-SNAPSHOT</version>
+    <version>1.0.1-SNAPSHOT</version>
 
     <name>${project.groupId}:${project.artifactId}</name>
     <description>Apache Camel OAuth2 component. See README.md for details/</description>
@@ -106,6 +106,10 @@
                 <groupId>org.apache.camel</groupId>
                 <artifactId>camel-component-maven-plugin</artifactId>
                 <version>${camel.version}</version>
+                <configuration>
+                    <sourcesOutputDir>${project.build.directory}/generated-sources/camel</sourcesOutputDir>
+                    <resourcesOutputDir>${project.build.directory}/generated-sources/camel</resourcesOutputDir>
+                </configuration>
                 <executions>
                     <execution>
                         <id>generate</id>
@@ -129,11 +133,11 @@
                         </goals>
                         <configuration>
                             <sources>
-                                <source>${project.basedir}/src/generated/java</source>
+                                <source>${project.build.directory}/generated-sources/camel</source>
                             </sources>
                             <resources>
                                 <resource>
-                                    <directory>${project.basedir}/src/generated/resources</directory>
+                                    <directory>${project.build.directory}/generated-sources/camel</directory>
                                 </resource>
                             </resources>
                         </configuration>
