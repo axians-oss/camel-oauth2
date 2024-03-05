@@ -1,7 +1,6 @@
 package nl.axians.camel.oauth2;
 
 import org.apache.camel.Exchange;
-import org.apache.camel.test.junit5.CamelTestSupport;
 import org.junit.jupiter.api.Test;
 import org.mockserver.model.HttpRequest;
 import org.mockserver.verify.VerificationTimes;
@@ -38,7 +37,7 @@ public class CachedTokenTest extends BaseOAuth2Test {
         mockServer.verify(request().withHeader("Content-Type", "application/x-www-form-urlencoded"));
 
         assertThat(getMockEndpoint("mock:result").getExchanges().size()).isEqualTo(2);
-        final Exchange exchange = getMockEndpoint("mock:result").getExchanges().getLast();
+        final Exchange exchange = getMockEndpoint("mock:result").getExchanges().get(1);
         assertThat(exchange).isNotNull();
         assertThat(exchange.getIn().getHeader("Authorization")).isEqualTo("Bearer 1234567890");
     }

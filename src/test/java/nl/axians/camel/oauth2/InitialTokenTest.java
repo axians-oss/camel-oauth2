@@ -35,7 +35,7 @@ public class InitialTokenTest extends BaseOAuth2Test {
                         param("grant_type", "client_credentials"))));
         mockServer.verify(request().withHeader("Content-Type", "application/x-www-form-urlencoded"));
 
-        final Exchange exchange = getMockEndpoint("mock:result").getExchanges().getFirst();
+        final Exchange exchange = getMockEndpoint("mock:result").getExchanges().get(0);
         assertThat(exchange).isNotNull();
         assertThat(exchange.getIn().getHeader("Authorization")).isEqualTo("Bearer 1234567890");
     }

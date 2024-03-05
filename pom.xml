@@ -42,8 +42,14 @@
   </scm>
 
     <properties>
+        <maven.compiler.source>17</maven.compiler.source>
+        <maven.compiler.target>17</maven.compiler.target>
+        <maven.compiler.release>17</maven.compiler.release>
+
         <builder-helper-maven-plugin.version>3.5.0</builder-helper-maven-plugin.version>
         <mockserver.version>5.15.0</mockserver.version>
+
+
     </properties>
 
     <dependencies>

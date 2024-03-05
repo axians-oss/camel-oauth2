@@ -6,8 +6,6 @@ import org.mockserver.matchers.Times;
 import org.mockserver.model.HttpRequest;
 import org.mockserver.verify.VerificationTimes;
 
-import java.time.Duration;
-
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockserver.model.HttpRequest.request;
 import static org.mockserver.model.HttpResponse.response;
@@ -32,7 +30,7 @@ public class ExpiredTokenTest extends BaseOAuth2Test {
 
         // Act
         template.sendBody("direct:start", null);
-        Thread.sleep(Duration.ofSeconds(7));
+        Thread.sleep(7000);
         template.sendBody("direct:start", null);
 
         // Assert
@@ -43,7 +41,7 @@ public class ExpiredTokenTest extends BaseOAuth2Test {
         mockServer.verify(request().withHeader("Content-Type", "application/x-www-form-urlencoded"));
 
         assertThat(getMockEndpoint("mock:result").getExchanges().size()).isEqualTo(2);
-        final Exchange exchange = getMockEndpoint("mock:result").getExchanges().getLast();
+        final Exchange exchange = getMockEndpoint("mock:result").getExchanges().get(1);
         assertThat(exchange).isNotNull();
         assertThat(exchange.getIn().getHeader("Authorization")).isEqualTo("Bearer 0987654321");
     }
