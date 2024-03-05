@@ -21,12 +21,13 @@ public class OAuth2EndpointUriFactory extends org.apache.camel.support.component
     private static final Set<String> SECRET_PROPERTY_NAMES;
     private static final Set<String> MULTI_VALUE_PREFIXES;
     static {
-        Set<String> props = new HashSet<>(7);
+        Set<String> props = new HashSet<>(8);
         props.add("accessTokenUrl");
         props.add("clientId");
         props.add("clientSecret");
         props.add("lazyStartProducer");
         props.add("name");
+        props.add("redirectURI");
         props.add("scope");
         props.add("tokenExpirationThreshold");
         PROPERTY_NAMES = Collections.unmodifiableSet(props);

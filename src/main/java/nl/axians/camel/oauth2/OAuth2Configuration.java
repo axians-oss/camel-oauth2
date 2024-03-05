@@ -34,6 +34,9 @@ public class OAuth2Configuration implements Cloneable {
     @UriParam(label = "common", defaultValue = "300")
     private long tokenExpirationThreshold = 300;
 
+    @UriParam(label = "common")
+    private String redirectURI;
+
     /**
      * The name of the access token. This is a user provided name and should be unique for each OAuth2
      * access token urt.
@@ -135,6 +138,24 @@ public class OAuth2Configuration implements Cloneable {
      */
     public void setScope(String scope) {
         this.scope = scope;
+    }
+
+    /**
+     * Get the OAuth2 redirect URI.
+     *
+     * @return The OAuth2 redirect URI.
+     */
+    public String getRedirectURI() {
+        return redirectURI;
+    }
+
+    /**
+     * Set the OAuth2 redirect URI.
+     *
+     * @param redirectURI The OAuth2 redirect URI.
+     */
+    public void setRedirectURI(String redirectURI) {
+        this.redirectURI = redirectURI;
     }
 
     /**

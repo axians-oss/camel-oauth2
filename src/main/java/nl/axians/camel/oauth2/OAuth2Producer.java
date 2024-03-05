@@ -12,6 +12,7 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.nio.charset.StandardCharsets;
 import java.time.Instant;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
 
@@ -49,15 +50,21 @@ public class OAuth2Producer extends DefaultProducer {
     private void initHttpClient() throws URISyntaxException {
         httpClient = HttpClient.newBuilder().build();
 
+        // Create the access token request form data request parameters
+        final Map<String, String> formData = new HashMap<>();
+        formData.put("grant_type", "client_credentials");
+        if (configuration.getScope() != null) {
+            formData.put("scope", configuration.getScope());
+        }
+        if (configuration.getRedirectURI() != null) {
+            formData.put("redirect_uri", configuration.getRedirectURI());
+        }
+
         httpRequest = HttpRequest.newBuilder()
                 .uri(new URI(configuration.getAccessTokenUrl()))
                 .header("Content-Type", "application/x-www-form-urlencoded")
                 .header("Authorization", configuration.getAuthorizationHeader())
-                .POST(HttpRequest.BodyPublishers.ofString(getFormDataAsString(Map.of(
-                                "grant_type", "client_credentials",
-                                "scope", configuration.getScope()
-                        ))
-                ))
+                .POST(HttpRequest.BodyPublishers.ofString(getFormDataAsString(formData)))
                 .build();
     }
 

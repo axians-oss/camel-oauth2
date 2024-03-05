@@ -16,7 +16,30 @@
     <version>1.0.0-SNAPSHOT</version>
 
     <name>${project.groupId}:${project.artifactId}</name>
-    <url>http://www.myorganization.org</url>
+    <description>Apache Camel OAuth2 component. See README.md for details/</description>
+    <url>https://github.com/axians-oss/camel-oauth2</url>
+
+    <licenses>
+        <license>
+            <name>The Apache License, Version 2.0</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+        </license>
+    </licenses>
+
+    <developers>
+        <developer>
+            <name>Jacob Hoeflaken</name>
+            <email>jacob.hoeflaken@axians.com</email>
+            <organization>Axians</organization>
+            <organizationUrl>http://www.axians.nl</organizationUrl>
+        </developer>
+    </developers>
+
+    <scm>
+        <connection>scm:https://github.com/axians-oss/camel-oauth2.git</connection>
+        <developerConnection>scm:git:https://github.com/axians-oss/camel-oauth2.git</developerConnection>
+        <url>https://github.com/axians-oss/camel-oauth2</url>
+    </scm>
 
     <properties>
         <builder-helper-maven-plugin.version>3.5.0</builder-helper-maven-plugin.version>

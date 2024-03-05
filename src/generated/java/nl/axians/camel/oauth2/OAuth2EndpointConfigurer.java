@@ -29,6 +29,8 @@ public class OAuth2EndpointConfigurer extends PropertyConfigurerSupport implemen
         case "clientSecret": target.getConfiguration().setClientSecret(property(camelContext, java.lang.String.class, value)); return true;
         case "lazystartproducer":
         case "lazyStartProducer": target.setLazyStartProducer(property(camelContext, boolean.class, value)); return true;
+        case "redirecturi":
+        case "redirectURI": target.getConfiguration().setRedirectURI(property(camelContext, java.lang.String.class, value)); return true;
         case "scope": target.getConfiguration().setScope(property(camelContext, java.lang.String.class, value)); return true;
         case "tokenexpirationthreshold":
         case "tokenExpirationThreshold": target.getConfiguration().setTokenExpirationThreshold(property(camelContext, long.class, value)); return true;
@@ -47,6 +49,8 @@ public class OAuth2EndpointConfigurer extends PropertyConfigurerSupport implemen
         case "clientSecret": return java.lang.String.class;
         case "lazystartproducer":
         case "lazyStartProducer": return boolean.class;
+        case "redirecturi":
+        case "redirectURI": return java.lang.String.class;
         case "scope": return java.lang.String.class;
         case "tokenexpirationthreshold":
         case "tokenExpirationThreshold": return long.class;
@@ -66,6 +70,8 @@ public class OAuth2EndpointConfigurer extends PropertyConfigurerSupport implemen
         case "clientSecret": return target.getConfiguration().getClientSecret();
         case "lazystartproducer":
         case "lazyStartProducer": return target.isLazyStartProducer();
+        case "redirecturi":
+        case "redirectURI": return target.getConfiguration().getRedirectURI();
         case "scope": return target.getConfiguration().getScope();
         case "tokenexpirationthreshold":
         case "tokenExpirationThreshold": return target.getConfiguration().getTokenExpirationThreshold();
