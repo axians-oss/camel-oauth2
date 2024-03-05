@@ -12,7 +12,7 @@
     <groupId>nl.axians.camel</groupId>
     <artifactId>camel-oauth2</artifactId>
     <packaging>jar</packaging>
-    <version>1.0.1</version>
+    <version>1.0.2-SNAPSHOT</version>
 
     <name>${project.groupId}:${project.artifactId}</name>
     <description>Apache Camel OAuth2 component. See README.md for details/</description>
@@ -38,7 +38,7 @@
         <connection>scm:https://github.com/axians-oss/camel-oauth2.git</connection>
         <developerConnection>scm:git:https://github.com/axians-oss/camel-oauth2.git</developerConnection>
         <url>https://github.com/axians-oss/camel-oauth2</url>
-      <tag>1.0.1</tag>
+      <tag>1.0.0</tag>
   </scm>
 
     <properties>
